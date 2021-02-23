@@ -32,6 +32,10 @@ jobs:
           sed -i -E 's/activate\sgammapy-.*/activate gammapy-${{ github.event.client_payload.release }}/' download/install/gammapy-${{ github.event.client_payload.release }}-environment.yml
           sed -i -E 's/name:\sgammapy-.*/name: gammapy-${{ github.event.client_payload.release }}/' download/install/gammapy-${{ github.event.client_payload.release }}-environment.yml
           sed -i -E 's/gammapy=.*/gammapy=${{ github.event.client_payload.release }}/' download/install/gammapy-${{ github.event.client_payload.release }}-environment.yml
+      - name: get date
+        run: |
+          today=date +"%b %d, %Y"
+          echo "today: ${today}"
       - name: commit changes
         uses: stefanzweifel/git-auto-commit-action@v4.9.0
         with:
