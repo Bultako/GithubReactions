@@ -1,0 +1,8 @@
+name: dockerfile
+on: repository_dispatch
+jobs:
+  process:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Hello
+      run: echo 'Hello, World'
