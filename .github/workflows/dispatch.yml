@@ -6,6 +6,8 @@ jobs:
     steps:
       - name: checkout repo
         uses: actions/checkout@v2
+        with:
+          ref: other
       - name: Hello
         run: |
           touch file.txt
