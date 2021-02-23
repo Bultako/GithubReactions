@@ -12,9 +12,9 @@ jobs:
         if: github.event.client_payload.release!=''
         run: |
           release="${{ github.event.client_payload.release }}"
-          cp -R docs/dev docs/${{release}}
-          mv docs/${{release}}/_downloads/notebooks-dev.tar docs/${{release}}/_downloads/notebooks-${{release}}.tar
-          sed -i -E 's|url=\.\./.*"|url=../${{release}}"|' docs/stable/index.html
+          cp -R docs/dev docs/${release}
+          mv docs/${release}/_downloads/notebooks-dev.tar docs/${release}/_downloads/notebooks-${release}.tar
+          sed -i -E 's|url=\.\./.*"|url=../${release}"|' docs/stable/index.html
       - name: commit changes
         uses: stefanzweifel/git-auto-commit-action@v4.9.0
         with:
@@ -29,14 +29,14 @@ jobs:
         run: |
           today="$(date +'%b %d, %Y')"
           release="${{ github.event.client_payload.release }}"
-          cp download/install/template-environment.yml download/install/gammapy-${{release}}-environment.yml
-          sed -i -E 's/version\s.*/version ${{release}}/' download/install/gammapy-${{release}}-environment.yml
-          sed -i -E 's/gammapy-.*-environment.yml/gammapy-${{release}}-environment.yml/' download/install/gammapy-${{release}}-environment.yml
-          sed -i -E 's/activate\sgammapy-.*/activate gammapy-${{release}}/' download/install/gammapy-${{release}}-environment.yml
-          sed -i -E 's/name:\sgammapy-.*/name: gammapy-${{release}}/' download/install/gammapy-${{release}}-environment.yml
-          sed -i -E 's/gammapy=.*/gammapy=${{release}}/' download/install/gammapy-${{release}}-environment.yml
-          news='<li><em>${{today}}</em> - Gammapy <strong>${{release}}</strong> (<a href="https://docs.gammapy.org/${{release}}/">documentation</a> ,<a href="https://docs.gammapy.org/${{release}}/changelog.html">changelog</a>)</li>'
-          sed -i -E 's/<!--\stag\snews\s-->/<!-- tag news -->\n${{news}}/' news.html
+          cp download/install/template-environment.yml download/install/gammapy-${release}-environment.yml
+          sed -i -E "s/version\s.*/version $release/" download/install/gammapy-${release}-environment.yml
+          sed -i -E "s/gammapy-.*-environment.yml/gammapy-$release-environment.yml/" download/install/gammapy-${release}-environment.yml
+          sed -i -E "s/activate\sgammapy-.*/activate gammapy-$release/" download/install/gammapy-${release}-environment.yml
+          sed -i -E "s/name:\sgammapy-.*/name: gammapy-$release" download/install/gammapy-${release}-environment.yml
+          sed -i -E "s/gammapy=.*/gammapy=$release/" download/install/gammapy-${release}-environment.yml
+          news='<li><em>${today}</em> - Gammapy <strong>${release}</strong> (<a href="https://docs.gammapy.org/${release}/">documentation</a> ,<a href="https://docs.gammapy.org/${release}/changelog.html">changelog</a>)</li>'
+          sed -i -E '"/<!--\stag\snews\s-->/<!-- tag news -->\n$news/" news.html
       - name: commit changes
         uses: stefanzweifel/git-auto-commit-action@v4.9.0
         with:
