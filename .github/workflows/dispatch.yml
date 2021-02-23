@@ -7,14 +7,16 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v2
         with:
-          ref: other
-      - name: postbuild
+          ref: master
+      - name: postbuild docs
         if: github.event.client_payload.release!=''
         run: |
-          echo ${{ github.event.client_payload.release }}
+          cp -R docs/dev docs/${{ github.event.client_payload.release }}
+          mv docs/${{ github.event.client_payload.release }}/_downloads/notebooks-dev.tar docs/${{ github.event.client_payload.release }}/_downloads/notebooks-${{ github.event.client_payload.release }}.tar
+          sed -i -E 's/url=\.\./.*/..\/${{ github.event.release.tag_name }}/' docs/stable/index.html
       - name: commit changes
         uses: stefanzweifel/git-auto-commit-action@v4.9.0
         with:
-          branch: other
+          branch: master
           commit_author: GitHub Actions <actions@github.com>
           commit_message: commit dockerfile modif
