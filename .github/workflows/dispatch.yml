@@ -33,7 +33,7 @@ jobs:
           sed -i -E "s/version\s.*/version $release/" download/install/gammapy-${release}-environment.yml
           sed -i -E "s/gammapy-.*-environment.yml/gammapy-$release-environment.yml/" download/install/gammapy-${release}-environment.yml
           sed -i -E "s/activate\sgammapy-.*/activate gammapy-$release/" download/install/gammapy-${release}-environment.yml
-          sed -i -E "s/name:\sgammapy-.*/name: gammapy-$release" download/install/gammapy-${release}-environment.yml
+          sed -i -E "s/name:\sgammapy-.*/name: gammapy-$release/" download/install/gammapy-${release}-environment.yml
           sed -i -E "s/gammapy=.*/gammapy=$release/" download/install/gammapy-${release}-environment.yml
           news='<li><em>${today}</em> - Gammapy <strong>${release}</strong> (<a href="https://docs.gammapy.org/${release}/">documentation</a> ,<a href="https://docs.gammapy.org/${release}/changelog.html">changelog</a>)</li>'
           sed -i -E "s/<!--\stag\snews\s-->/<!-- tag news -->\n$news/" news.html
