@@ -10,7 +10,6 @@ jobs:
           ref: other
       - name: Hello
         run: |
-          touch file.txt
           echo ${{ github.event.client_payload.release }}
       - name: commit changes
         uses: stefanzweifel/git-auto-commit-action@v4.9.0
