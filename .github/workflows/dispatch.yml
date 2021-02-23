@@ -1,4 +1,4 @@
-name: dockerfile
+name: release
 on: repository_dispatch
 jobs:
   process:
@@ -20,7 +20,7 @@ jobs:
         with:
           branch: master
           commit_author: GitHub Actions <actions@github.com>
-          commit_message: commit dockerfile modif
+          commit_message: commit docs modif
       - name: checkout repo
         uses: actions/checkout@v2
         with:
@@ -36,9 +36,10 @@ jobs:
           sed -i -E "s/name:\sgammapy-.*/name: gammapy-$release/" download/install/gammapy-${release}-environment.yml
           sed -i -E "s/gammapy=.*/gammapy=$release/" download/install/gammapy-${release}-environment.yml
           news='<li><em>${today}</em> - Gammapy <strong>${release}</strong> (<a href="https://docs.gammapy.org/${release}/">documentation</a> ,<a href="https://docs.gammapy.org/${release}/changelog.html">changelog</a>)</li>'
+          sed -i -E "s/\<\!--\stag\snews\s--\>/<!-- tag news -->\n$news/" news.html
       - name: commit changes
         uses: stefanzweifel/git-auto-commit-action@v4.9.0
         with:
           branch: other
           commit_author: GitHub Actions <actions@github.com>
-          commit_message: commit dockerfile modif
+          commit_message: commit web modif
