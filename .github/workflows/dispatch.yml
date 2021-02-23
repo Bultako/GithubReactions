@@ -9,8 +9,9 @@ jobs:
         with:
           ref: other
       - name: postbuild
+        if: github.event.client_payload.release!=''
         run: |
-          echo 'event_type:${{ github.event.event_type }} name:${{ github.event_name }}'
+          echo ${{ github.event.client_payload.release }}
       - name: commit changes
         uses: stefanzweifel/git-auto-commit-action@v4.9.0
         with:
