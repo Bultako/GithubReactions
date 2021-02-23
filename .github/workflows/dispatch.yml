@@ -13,7 +13,7 @@ jobs:
         run: |
           cp -R docs/dev docs/${{ github.event.client_payload.release }}
           mv docs/${{ github.event.client_payload.release }}/_downloads/notebooks-dev.tar docs/${{ github.event.client_payload.release }}/_downloads/notebooks-${{ github.event.client_payload.release }}.tar
-          sed -i -E 's/url=\.\./.*/..\/${{ github.event.release.tag_name }}/' docs/stable/index.html
+          sed -i -E 's|url=\.\./.*|../${{ github.event.client_payload.release }}|' docs/stable/index.html
       - name: commit changes
         uses: stefanzweifel/git-auto-commit-action@v4.9.0
         with:
