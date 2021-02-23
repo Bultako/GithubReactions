@@ -11,9 +11,10 @@ jobs:
       - name: postbuild docs
         if: github.event.client_payload.release!=''
         run: |
-          cp -R docs/dev docs/${{ github.event.client_payload.release }}
-          mv docs/${{ github.event.client_payload.release }}/_downloads/notebooks-dev.tar docs/${{ github.event.client_payload.release }}/_downloads/notebooks-${{ github.event.client_payload.release }}.tar
-          sed -i -E 's|url=\.\./.*"|url=../${{ github.event.client_payload.release }}"|' docs/stable/index.html
+          release="${{ github.event.client_payload.release }}"
+          cp -R docs/dev docs/${release}
+          mv docs/${release}/_downloads/notebooks-dev.tar docs/${release}/_downloads/notebooks-${release}.tar
+          sed -i -E 's|url=\.\./.*"|url=../${release}"|' docs/stable/index.html
       - name: commit changes
         uses: stefanzweifel/git-auto-commit-action@v4.9.0
         with:
@@ -26,16 +27,14 @@ jobs:
           ref: other
       - name: postbuild web
         run: |
-          cp download/install/template-environment.yml download/install/gammapy-${{ github.event.client_payload.release }}-environment.yml
-          sed -i -E 's/version\s.*/version ${{ github.event.client_payload.release }}/' download/install/gammapy-${{ github.event.client_payload.release }}-environment.yml
-          sed -i -E 's/gammapy-.*-environment.yml/gammapy-${{ github.event.client_payload.release }}-environment.yml/' download/install/gammapy-${{ github.event.client_payload.release }}-environment.yml
-          sed -i -E 's/activate\sgammapy-.*/activate gammapy-${{ github.event.client_payload.release }}/' download/install/gammapy-${{ github.event.client_payload.release }}-environment.yml
-          sed -i -E 's/name:\sgammapy-.*/name: gammapy-${{ github.event.client_payload.release }}/' download/install/gammapy-${{ github.event.client_payload.release }}-environment.yml
-          sed -i -E 's/gammapy=.*/gammapy=${{ github.event.client_payload.release }}/' download/install/gammapy-${{ github.event.client_payload.release }}-environment.yml
-      - name: get date
-        run: |
           today="$(date +'%b %d, %Y')"
-          echo "today: ${today}"
+          release="${{ github.event.client_payload.release }}"
+          cp download/install/template-environment.yml download/install/gammapy-${release}-environment.yml
+          sed -i -E 's/version\s.*/version ${release}/' download/install/gammapy-${release}-environment.yml
+          sed -i -E 's/gammapy-.*-environment.yml/gammapy-${release}-environment.yml/' download/install/gammapy-${release}-environment.yml
+          sed -i -E 's/activate\sgammapy-.*/activate gammapy-${release}/' download/install/gammapy-${release}-environment.yml
+          sed -i -E 's/name:\sgammapy-.*/name: gammapy-${release}/' download/install/gammapy-${release}-environment.yml
+          sed -i -E 's/gammapy=.*/gammapy=${release}/' download/install/gammapy-${release}-environment.yml
       - name: commit changes
         uses: stefanzweifel/git-auto-commit-action@v4.9.0
         with:
