@@ -4,5 +4,15 @@ jobs:
   process:
     runs-on: ubuntu-latest
     steps:
-    - name: Hello
-      run: echo 'Hello, World'
+      - name: checkout repo
+        uses: actions/checkout@v2
+      - name: Hello
+        run: |
+          touch file.txt
+          echo ${{ github.event.client_payload.release }}
+      - name: commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4.9.0
+        with:
+          branch: other
+          commit_author: GitHub Actions <actions@github.com>
+          commit_message: commit dockerfile modif
