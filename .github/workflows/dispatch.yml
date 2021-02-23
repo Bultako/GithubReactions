@@ -36,7 +36,7 @@ jobs:
           sed -i -E "s/name:\sgammapy-.*/name: gammapy-$release/" download/install/gammapy-${release}-environment.yml
           sed -i -E "s/gammapy=.*/gammapy=$release/" download/install/gammapy-${release}-environment.yml
           news='<li><em>${today}</em> - Gammapy <strong>${release}</strong> (<a href="https://docs.gammapy.org/${release}/">documentation</a> ,<a href="https://docs.gammapy.org/${release}/changelog.html">changelog</a>)</li>'
-          sed -i -E "s/\<\!--\stag\snews\s--\>/\<\!-- tag news --\>\n$news/" news.html
+          sed -i -E "s/\<\!--\stag\snews\s--\>/\<\!-- tag news --\>\nok/" news.html
       - name: commit changes
         uses: stefanzweifel/git-auto-commit-action@v4.9.0
         with:
